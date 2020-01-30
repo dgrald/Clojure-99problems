@@ -1,6 +1,6 @@
 # learningstuff
 
-FIXME: description
+A way for me to learn Clojure in hands-on way. Problems defined here: http://aperiodic.net/phil/scala/s-99/
 
 ## Installation
 
