@@ -32,14 +32,11 @@
 ; 4
 (defn length
   ([input-list]
-    (if (empty? input-list)
-      0
-      (length input-list 1)))
+    (length input-list 0))
   ([input-list l]
-    (let [[first-item & remaining] input-list]
-      (if (empty? remaining)
-        l
-        (recur remaining (+ l 1))))))
+    (if (empty? input-list)
+      l
+      (recur (rest input-list) (+ 1 l)))))
 
 ; 5
 (defn reverse-list
@@ -50,7 +47,24 @@
     []
     input-list)))
 
+; 6
+(defn is-palindrome
+  [input-list]
+  (= (reverse-list input-list) input-list))
+
+; 7
+; (defn flatten-list
+;   ([input-list]
+;   (flatten-list input-list []))
+;   ([input-list to-return]
+;   (let [[first-item & remaining] input-list]
+;     (if (nil? first-item)
+;       to-return
+;       (if (seq? first-item)
+;         (recur remaining (concat to-return (flatten-list first-item)))
+;         (recur remaining (concat to-return [first-item])))))))
+
 (defn -main
   "run examples here"
   [& args]
-  (println (length [1])))
+  (println "Hi"))
