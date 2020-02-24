@@ -20,7 +20,7 @@
 ; 3
 (defn kth
   ([input-list k]
-    (if (> k (count input-list))
+    (if (or (> k (count input-list)) (< k 1))
       nil
       (kth input-list 1 k)))
   ([input-list c k]
