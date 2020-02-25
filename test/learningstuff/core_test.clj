@@ -68,3 +68,17 @@
     (is (= ["a", "b", "d"] (compress ["a" "a" "a" "a" "a" "b" "d" "d"]))))
     (is (= [] (compress [])))
     (is (= ["c"] (compress ["c" "c" "c" "c"]))))
+
+;10 pack
+(deftest pack-test
+  (testing "Return consecutive elements together in a sequence"
+    (is (= [["a" "a" "a" "a" "a"] ["b"] ["d" "d"]] (pack ["a" "a" "a" "a" "a" "b" "d" "d"]))))
+    (is (= [["c" "c" "c" "c"]] (pack ["c" "c" "c" "c"])))
+    (is (= [] (pack []))))
+
+;10 run-length
+(deftest run-length-test
+  (testing "Return tuples of elements with number of consecutive duplicates"
+    (is (= [["a" 5] ["b" 1] ["d" 2]] (run-length ["a" "a" "a" "a" "a" "b" "d" "d"]))))
+    (is (= [] (run-length [])))
+    (is (= [["c" 4]] (run-length ["c" "c" "c" "c"]))))

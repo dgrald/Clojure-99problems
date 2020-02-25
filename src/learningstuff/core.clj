@@ -31,12 +31,12 @@
 
 ; 4
 (defn length
-  ([input-list]
-    (length input-list 0))
-  ([input-list l]
-    (if (empty? input-list)
-      l
-      (recur (rest input-list) (+ 1 l)))))
+  [input-list]
+  (reduce 
+    (fn [to-return next-elem]
+    (inc to-return))
+    0
+    input-list))
 
 ; 5
 (defn reverse-list
@@ -54,21 +54,19 @@
 
 ; 7
 (defn flatten-list
-  ([input-list]
-  (flatten-list input-list []))
-  ([input-list to-return]
-  (let [[first-item & remaining] input-list]
-    (if (nil? first-item)
-      (into [] to-return)
-      (if (vector? first-item)
-        (recur remaining (concat to-return (flatten-list first-item)))
-        (recur remaining (concat to-return [first-item])))))))
+  [input-list]
+  (loop [input-list input-list to-return []]
+    (let [[first-item & remaining] input-list]
+      (if (nil? first-item)
+        (into [] to-return)
+        (if (vector? first-item)
+          (recur remaining (concat to-return (flatten-list first-item)))
+          (recur remaining (concat to-return [first-item])))))))
 
 ; 8, compress = "eliminate consecutive duplicates"
 (defn compress
-  ([input-list]
-  (compress input-list []))
-  ([input-list to-return]
+  [input-list]
+  (loop [input-list input-list to-return []]
     (let [[first-item & remaining] input-list]
       (if (nil? first-item)
         (into [] to-return)
@@ -76,7 +74,24 @@
           (def new-input-list (into [] (drop-while #(= % first-item) input-list)))
           (recur new-input-list (concat to-return [first-item])))))))
 
+; 9, pack = "consecutive duplicates of list elements into sublists"
+(defn pack
+  [input-list]
+  (loop [input-list input-list to-return []]
+    (let [[first-item & remaining] input-list]
+      (if (nil? first-item)
+        (into [] to-return)
+        (do 
+          (def new-input-list (into [] (drop-while #(= % first-item) input-list)))
+          (def packed-items (into [] (take-while #(= % first-item) input-list)))
+          (recur new-input-list (into [] (conj to-return packed-items))))))))
+
+; 10, run-length = "count of consecutive duplicates"
+(defn run-length
+  [input-list]
+  (into [] (map (fn [next-elem] [(first next-elem) (count next-elem)]) (pack input-list))))
+
 (defn -main
   "run examples here"
   [& args]
-  (println "Hi"))
+  (println (pack ["a" "a" "a" "a" "a" "b" "d" "d"])))
