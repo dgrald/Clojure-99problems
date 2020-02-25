@@ -72,7 +72,9 @@
     (let [[first-item & remaining] input-list]
       (if (nil? first-item)
         (into [] to-return)
-        (recur (into [] (drop-while #(= % first-item) input-list)) (concat to-return [first-item]))))))
+        (do 
+          (def new-input-list (into [] (drop-while #(= % first-item) input-list)))
+          (recur new-input-list (concat to-return [first-item])))))))
 
 (defn -main
   "run examples here"
