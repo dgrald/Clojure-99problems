@@ -61,3 +61,10 @@
     (is (= [1 2 4 5] (flatten-list [1 [2 []] [4 5]]))))
     (is (= [1] (flatten-list [[[1]] []])))
     (is (= [] (flatten-list []))))
+
+;8 compress = "eliminate consecutive duplicates"
+(deftest compress-test
+  (testing "Should eliminate consecutive duplicates"
+    (is (= ["a", "b", "d"] (compress ["a" "a" "a" "a" "a" "b" "d" "d"]))))
+    (is (= [] (compress [])))
+    (is (= ["c"] (compress ["c" "c" "c" "c"]))))

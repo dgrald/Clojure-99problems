@@ -64,6 +64,16 @@
         (recur remaining (concat to-return (flatten-list first-item)))
         (recur remaining (concat to-return [first-item])))))))
 
+; 8, compress = "eliminate consecutive duplicates"
+(defn compress
+  ([input-list]
+  (compress input-list []))
+  ([input-list to-return]
+    (let [[first-item & remaining] input-list]
+      (if (nil? first-item)
+        (into [] to-return)
+        (recur (into [] (drop-while #(= % first-item) input-list)) (concat to-return [first-item]))))))
+
 (defn -main
   "run examples here"
   [& args]
