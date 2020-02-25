@@ -82,3 +82,52 @@
     (is (= [["a" 5] ["b" 1] ["d" 2]] (run-length ["a" "a" "a" "a" "a" "b" "d" "d"]))))
     (is (= [] (run-length [])))
     (is (= [["c" 4]] (run-length ["c" "c" "c" "c"]))))
+
+;11 run-length-modified
+(deftest run-length-modified-test
+  (testing "Return tuples of elements with number of consecutive duplicates or element if consecutive count is 1"
+    (is (= [["a" 5] "b" ["d" 2]] (run-length-modified ["a" "a" "a" "a" "a" "b" "d" "d"]))))
+    (is (= [] (run-length-modified [])))
+    (is (= [["c" 4]] (run-length-modified ["c" "c" "c" "c"]))))
+
+;12 decode-run-length
+(deftest decode-run-length-test
+  (testing "Return the original sequence from a run length encoding"
+    (is (= ["a" "a" "a" "a" "a" "b" "d" "d"] (decode-run-length [["a" 5] ["b" 1] ["d" 2]]))))
+    (is (= [] (decode-run-length [])))
+    (is (= ["c" "c" "c" "c"] (decode-run-length [["c" 4]]))))
+
+;13 run-length-direct
+(deftest run-length-direct-test
+  (testing "Return tuples of elements with number of consecutive duplicates"
+    (is (= [["a" 5] ["b" 1] ["d" 2]] (run-length-direct ["a" "a" "a" "a" "a" "b" "d" "d"]))))
+    (is (= [] (run-length-direct [])))
+    (is (= [["c" 4]] (run-length-direct ["c" "c" "c" "c"]))))
+
+;14 duplicate
+(deftest duplicate-test
+  (testing "Return a vector of each element repeated once"
+    (is (= ["a" "a" "b" "b" "c" "c" "e" "e" "a" "a"] (duplicate ["a" "b" "c" "e" "a"]))))
+    (is (= [] (duplicate []))))
+
+;15 duplicate-n
+(deftest duplicate-n-test
+  (testing "Return a vector of each element repeated n times"
+    (is (= ["a" "a" "a" "b" "b" "b" "c" "c" "c" "e" "e" "e" "a" "a" "a"] (duplicate-n 3 ["a" "b" "c" "e" "a"])))
+    (is (= [] (duplicate-n 4 [])))
+    (is (= [1 1 1 1] (duplicate-n 4 [1])))))
+
+;16 drop-every-n
+(deftest drop-every-n-test
+  (testing "Drop every n elements"
+    (is (= [1 2 4 5 7 8 10] (drop-every-n 3 [1 2 3 4 5 6 7 8 9 10])))
+    (is (= [] (drop-every-n 4 [])))
+    (is (= ["a" "c" "e"] (drop-every-n 2 ["a" "b" "c" "d" "e"])))))
+
+;17 split-at-alt
+(deftest split-at-alt-test
+  (testing "Split the vector and return a vector of two vectors"
+    (is (= [[1 2 3] [4 5 6 7 8 9 10]] (split-at-alt 3 [1 2 3 4 5 6 7 8 9 10])))
+    (is (= [[] []] (split-at-alt 4 [])))
+    (is (= [[1 2 3 4] []] (split-at-alt 10 [1 2 3 4])))
+    (is (= [["a"] ["b" "c" "d"]] (split-at-alt 1 ["a" "b" "c" "d"])))))
