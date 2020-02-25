@@ -53,16 +53,16 @@
   (= (reverse-list input-list) input-list))
 
 ; 7
-; (defn flatten-list
-;   ([input-list]
-;   (flatten-list input-list []))
-;   ([input-list to-return]
-;   (let [[first-item & remaining] input-list]
-;     (if (nil? first-item)
-;       to-return
-;       (if (seq? first-item)
-;         (recur remaining (concat to-return (flatten-list first-item)))
-;         (recur remaining (concat to-return [first-item])))))))
+(defn flatten-list
+  ([input-list]
+  (flatten-list input-list []))
+  ([input-list to-return]
+  (let [[first-item & remaining] input-list]
+    (if (nil? first-item)
+      (into [] to-return)
+      (if (vector? first-item)
+        (recur remaining (concat to-return (flatten-list first-item)))
+        (recur remaining (concat to-return [first-item])))))))
 
 (defn -main
   "run examples here"

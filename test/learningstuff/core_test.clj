@@ -51,6 +51,13 @@
     (is (= true (is-palindrome [1 3 1])))
     (is (= true (is-palindrome [1])))
     (is (= true (is-palindrome []))))
-  (testing "Should return true if list is a palindrome"
+  (testing "Should return false if list is not a palindrome"
     (is (= false (is-palindrome [1 2 3])))
     (is (= false (is-palindrome [1 2])))))
+
+;7
+(deftest flatten-list-test
+  (testing "Should flatten a list"
+    (is (= [1 2 4 5] (flatten-list [1 [2 []] [4 5]]))))
+    (is (= [1] (flatten-list [[[1]] []])))
+    (is (= [] (flatten-list []))))
