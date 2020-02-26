@@ -145,3 +145,17 @@
     (is (= ["d" "e" "f" "g" "h" "i" "j" "k" "a" "b" "c"] (rotate 3 ["a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k"])))
     (is (= ["j" "k" "a" "b" "c" "d" "e" "f" "g" "h" "i"] (rotate -2 ["a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k"])))
     (is (= [] (rotate 3 [])))))
+
+;20 remove-at
+(deftest remove-at-test
+  (testing "Should return the vector without the item at the specified index")
+  (is (= [[1 2 4] 3] (remove-at 2 [1 2 3 4])))
+  (is (= [["a" "b" "c" "d"] "e"] (remove-at 4 ["a" "b" "c" "d" "e"])))
+  (is (= [["a" "b" "c" "d"] nil] (remove-at 5 ["a" "b" "c" "d"]))))
+
+;21 insert-at
+(deftest insert-at-test
+  (testing "Should insert the given element at the specified index")
+  (is (= [1 2 3 4] (insert-at 2 1 [1 3 4])))
+  (is (= ["a" "b" "c" "d" "e"] (insert-at "e" 5 ["a" "b" "c" "d"])))
+  (is (= ["a" "b" "c" "d" "e"] (insert-at "a" 0 ["b" "c" "d" "e"]))))

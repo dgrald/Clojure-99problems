@@ -200,6 +200,27 @@
         (take start-index input-list))
       (into [] (concat start end)))))
 
+; 20, remote-at index and return removed element
+(defn remove-at
+  [n input-list]
+  (loop [remaining-list input-list to-return [] c 0]
+    (let [[first-item & remaining] remaining-list]
+      (if (nil? first-item)
+        [input-list nil]
+      (do
+        (if (= c n)
+          [(concat to-return remaining) first-item]
+          (recur remaining (concat to-return [first-item]) (inc c))))))))
+
+; 21, insert-at
+(defn insert-at
+  [new-elem n input-list]
+  (def start-list
+    (take n input-list))
+  (def end-list
+    (drop n input-list))
+  (into [] (concat start-list [new-elem] end-list)))
+
 (defn -main
   "run examples here"
   [& args]
