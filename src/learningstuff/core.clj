@@ -144,16 +144,8 @@
 ; 16, drop-every-n
 (defn drop-every-n
   [n input-list]
-  (loop [input-list input-list to-return [] c 1]
-    (let [[first-item & remaining] input-list]
-      (if (nil? first-item)
-        (into [] to-return)
-        (do 
-          (def new-to-return
-            (if (= 0 (mod c n))
-              to-return
-              (into [] (concat to-return [first-item]))))
-          (recur remaining new-to-return (inc c)))))))
+  (into [] 
+    (keep-indexed #(if (not= 0 (mod (inc %1) n)) %2) input-list)))
 
 ; 17, split-at-alt
 (defn split-at-alt
