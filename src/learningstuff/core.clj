@@ -173,8 +173,34 @@
               (into [] (concat to-return-end [first-item]))))
           (recur remaining new-to-return-start new-to-return-end (inc c)))))))
 
+; 18, slice
+(defn slice
+  [start end input-list]
+  (loop [input-list input-list to-return [] c 1]
+    (let [[first-item & remaining] input-list]
+      (if (or (nil? first-item) (> c end))
+        (into [] to-return)
+        (do 
+          (def new-to-return
+            (if (> c start)
+              (concat to-return [first-item])
+              to-return))
+          (recur remaining new-to-return (inc c)))))))
+
+; 19, rotate n places to the left
+(defn rotate
+  [n input-list]
+  (if (= 0 (count input-list))
+    []
+    (do
+      (def start-index (mod n (count input-list)))
+      (def start
+        (drop start-index input-list))
+      (def end
+        (take start-index input-list))
+      (into [] (concat start end)))))
 
 (defn -main
   "run examples here"
   [& args]
-  (println (pack ["a" "a" "a" "a" "a" "b" "d" "d"])))
+  (println (rotate 2 [1 2 3 4 5 6])))

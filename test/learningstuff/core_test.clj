@@ -131,3 +131,17 @@
     (is (= [[] []] (split-at-alt 4 [])))
     (is (= [[1 2 3 4] []] (split-at-alt 10 [1 2 3 4])))
     (is (= [["a"] ["b" "c" "d"]] (split-at-alt 1 ["a" "b" "c" "d"])))))
+
+;18 slice
+(deftest slice-test
+  (testing "Return a subset of the vector of the range of specified indices"
+    (is (= [4 5 6 7] (slice 3 7 [1 2 3 4 5 6 7 8 9 10])))
+    (is (= [] (slice 3 7 [])))
+    (is (= ["a" "b" "c" "d"] (slice 0 4 ["a" "b" "c" "d" "e" "f" "g"])))))
+
+;19 rotate
+(deftest rotate-test
+  (testing "Rotate the vector"
+    (is (= ["d" "e" "f" "g" "h" "i" "j" "k" "a" "b" "c"] (rotate 3 ["a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k"])))
+    (is (= ["j" "k" "a" "b" "c" "d" "e" "f" "g" "h" "i"] (rotate -2 ["a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k"])))
+    (is (= [] (rotate 3 [])))))
