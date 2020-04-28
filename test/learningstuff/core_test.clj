@@ -159,3 +159,10 @@
   (is (= [1 2 3 4] (insert-at 2 1 [1 3 4])))
   (is (= ["a" "b" "c" "d" "e"] (insert-at "e" 5 ["a" "b" "c" "d"])))
   (is (= ["a" "b" "c" "d" "e"] (insert-at "a" 0 ["b" "c" "d" "e"]))))
+
+; 22 range-alt
+(deftest range-alt-test
+  (testing "Should return a range inclusive of the given integers")
+  (is (= [4 5 6 7 8 9] (range-alt 4 9)))
+  (is (= [-1 0 1 2 3 4] (range-alt -1 4)))
+  (is (= [0] (range-alt 0 0))))

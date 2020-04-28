@@ -71,8 +71,8 @@
       (if (nil? first-item)
         (into [] to-return)
         (do 
-          (def new-input-list (into [] (drop-while #(= % first-item) input-list)))
-          (recur new-input-list (concat to-return [first-item])))))))
+          (let [new-input-list (into [] (drop-while #(= % first-item) input-list))]
+            (recur new-input-list (concat to-return [first-item]))))))))
 
 ; 9, pack = "consecutive duplicates of list elements into sublists"
 (defn pack
@@ -82,9 +82,9 @@
       (if (nil? first-item)
         (into [] to-return)
         (do 
-          (def new-input-list (into [] (drop-while #(= % first-item) input-list)))
-          (def packed-items (into [] (take-while #(= % first-item) input-list)))
-          (recur new-input-list (into [] (conj to-return packed-items))))))))
+          (let [new-input-list (into [] (drop-while #(= % first-item) input-list))]
+            (let [packed-items (into [] (take-while #(= % first-item) input-list))]
+            (recur new-input-list (into [] (conj to-return packed-items))))))))))
 
 ; 10, run-length = "count of consecutive duplicates"
 (defn run-length
@@ -106,8 +106,8 @@
   [input-list]
   (into [] (reduce 
     (fn [to-return next-elem]
-      (def next-repeat (into [] (repeat (last next-elem) (first next-elem))))
-      (concat to-return next-repeat))
+      (let [next-repeat (into [] (repeat (last next-elem) (first next-elem)))]
+        (concat to-return next-repeat)))
       []
       input-list)))
 
@@ -144,8 +144,7 @@
 ; 16, drop-every-n
 (defn drop-every-n
   [n input-list]
-  (into [] 
-    (keep-indexed #(if (not= 0 (mod (inc %1) n)) %2) input-list)))
+  (into [] (keep-indexed #(if (not= 0 (mod (inc %1) n)) %2) input-list)))
 
 ; 17, split-at-alt
 (defn split-at-alt
@@ -173,11 +172,9 @@
       (if (or (nil? first-item) (> c end))
         (into [] to-return)
         (do 
-          (def new-to-return
-            (if (> c start)
-              (concat to-return [first-item])
-              to-return))
-          (recur remaining new-to-return (inc c)))))))
+          (if (> c start)
+            (recur remaining (concat to-return [first-item]) (inc c))
+            (recur remaining to-return (inc c))))))))
 
 ; 19, rotate n places to the left
 (defn rotate
@@ -185,14 +182,12 @@
   (if (= 0 (count input-list))
     []
     (do
-      (def start-index (mod n (count input-list)))
-      (def start
-        (drop start-index input-list))
-      (def end
-        (take start-index input-list))
-      (into [] (concat start end)))))
+      (let [start-index (mod n (count input-list))]
+        (let [start (drop start-index input-list)]
+          (let [end (take start-index input-list)]
+            (into [] (concat start end))))))))
 
-; 20, remote-at index and return removed element
+; 20, remove-at index and return removed element
 (defn remove-at
   [n input-list]
   (loop [remaining-list input-list to-return [] c 0]
@@ -207,11 +202,17 @@
 ; 21, insert-at
 (defn insert-at
   [new-elem n input-list]
-  (def start-list
-    (take n input-list))
-  (def end-list
-    (drop n input-list))
-  (into [] (concat start-list [new-elem] end-list)))
+  (let [start-list (take n input-list)]
+    (let [end-list (drop n input-list)]
+      (into [] (concat start-list [new-elem] end-list)))))
+
+; 22, range-alt
+(defn range-alt
+  [start end]
+  (loop [to-return [] c start]
+    (if (> c end)
+      to-return
+      (recur (concat to-return [c]) (inc c)))))
 
 (defn -main
   "run examples here"
